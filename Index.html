@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: crimson;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 60%;
+            max-width: 640px;
+            min-width: 320px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* LEFT SIDE: input + button */
+        .leftSide {
+            width: 50%;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .leftSide h2 {
+            color: crimson;
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .leftSide p {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .container input {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            outline: 0;
+            border: 1px solid crimson;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .container button {
+            width: 100%;
+            height: 40px;
+            font-size: 1rem;
+            background-color: crimson;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .container button:hover {
+            background-color: #b0003a;
+        }
+
+        /* RIGHT SIDE: QR code display */
+        .rightSide {
+            width: 50%;
+            background-color: #fafafa;
+            border-left: 1px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .qrBox {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qrBox img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .qrBox img[src]:not([src=""]) {
+            display: block;
+        }
+
+        .qrPlaceholder {
+            color: #bbb;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .error {
+            animation: error 0.5s linear 5;
+        }
+
+        @keyframes error {
+            0% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-2px);
+            }
+
+            40% {
+                transform: translate(0);
+            }
+
+            60% {
+                transform: translate(2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Mobile: stack vertically */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .leftSide,
+            .rightSide {
+                width: 100%;
+            }
+
+            .rightSide {
+                border-left: none;
+                border-top: 1px dashed #ddd;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="leftSide">
+            <h2>QR Code Generator</h2>
+            <p>Text ya URL likho aur QR code banao</p>
+            <input type="text" id="qrText" placeholder="Text or Url">
+            <button onclick="qrGenerate()">Generate</button>
+        </div>
+        <div class="rightSide">
+            <div class="qrBox">
+                <span class="qrPlaceholder" id="placeholder">Aapka QR code yahan dikhega</span>
+                <img src="" alt="" id="qrImg">
+            </div>
+        </div>
+    </div>
+    <script>
+        const qrText = document.querySelector("#qrText");
+        const qrImg = document.querySelector("#qrImg");
+        const placeholder = document.querySelector("#placeholder");
+
+        function qrGenerate() {
+            if (qrText.value.length > 0) {
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrText.value)}`;
+                placeholder.style.display = "none";
+                qrText.value = "";
+            } else {
+                qrText.classList.add("error");
+                setTimeout(() => {
+                    qrText.classList.remove("error");
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>
