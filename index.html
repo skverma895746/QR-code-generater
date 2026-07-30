@@ -31,7 +31,7 @@
         .container {
             width: 100%;
             max-width: 780px;
-            /* Direct Working Campus Image URL (Agar local ho toh 'campus.jpg' likh lein) */
+            /* Direct Working Campus Image URL */
             background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.88)), 
                         url('https://recb.ac.in/Uploads/Banner/banner1.jpg') center/cover no-repeat;
             border-radius: 20px;
@@ -160,6 +160,7 @@
             gap: 1rem;
         }
 
+        /* The QR Image itself */
         .qrBox img {
             max-width: 100%;
             width: 240px;
@@ -274,9 +275,12 @@
 
         function qrGenerate() {
             if (qrText.value.trim().length > 0) {
+                // Ensure the image src targets the QR code directly
                 qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrText.value.trim())}`;
                 placeholder.style.display = "none";
                 qrImg.style.display = "block";
+                
+                // Show the download button again when a new QR is generated
                 downloadBtn.style.display = "inline-flex";
             } else {
                 qrText.classList.add("error");
@@ -288,14 +292,21 @@
 
         async function downloadQR() {
             try {
+                // Fetches ONLY the image source (the QR code itself)
                 const response = await fetch(qrImg.src);
                 const blob = await response.blob();
                 const link = document.createElement("a");
+                
                 link.href = URL.createObjectURL(blob);
-                link.download = "RECBijnor_3D_Tour_QR.png";
+                link.download = "RECBijnor_3D_Tour_QR.png"; // Saves just the image file
+                
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+
+                // Hides the download button after the image is downloaded
+                downloadBtn.style.display = "none";
+
             } catch (error) {
                 alert("Download failed. Please try again.");
             }
