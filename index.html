@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RECB 3D Campus Tour</title>
+    <title>REC Bijnor - 3D Campus Tour QR Generator</title>
     <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,127 +18,138 @@
         }
 
         body {
-            width: 100%;
+            width: 100vw;
             min-height: 100vh;
-            /* AI Generated Campus Style Background */
-            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
-                        url('https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+            background-color: #0f172a;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 1.5rem 1rem;
         }
 
-        /* TOP HEADING BANNER */
-        .top-banner {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 1.5rem;
-            width: 100%;
-            max-width: 640px;
-        }
-
-        .top-banner h1 {
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -0.02em;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-        }
-
-        .top-banner p {
-            color: #cbd5e1;
-            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-            margin-top: 0.3rem;
-            font-weight: 500;
-        }
-
-        /* MAIN CONTAINER (Same structure as original) */
+        /* MAIN CARD CONTAINER WITH AI CAMPUS BACKGROUND */
         .container {
             width: 100%;
-            max-width: 640px;
-            background-color: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            max-width: 680px;
+            /* AI Campus Image as Background inside Card */
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
             display: flex;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        /* LEFT SIDE: input + button (Original Placement) */
+        /* LEFT SIDE: Input & Button */
         .leftSide {
             width: 50%;
-            padding: clamp(1.25rem, 3vw, 2rem) 1.5rem;
+            padding: clamp(1.5rem, 4vw, 2.5rem) 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 0.85rem;
+            gap: 1rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .leftSide h2 {
-            color: #4f46e5;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: #818cf8;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
             font-weight: 700;
         }
 
         .leftSide p {
-            color: #64748b;
+            color: #94a3b8;
             font-size: 0.85rem;
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
         .container input {
             width: 100%;
-            height: 42px;
-            padding: 10px 12px;
+            height: 44px;
+            padding: 10px 14px;
             outline: 0;
-            border: 1px solid #4f46e5;
-            border-radius: 8px;
+            border: 1.5px solid rgba(129, 140, 248, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-radius: 10px;
             font-size: 0.9rem;
             transition: all 0.2s ease;
         }
 
+        .container input::placeholder {
+            color: #64748b;
+        }
+
         .container input:focus {
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            border-color: #818cf8;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
         }
 
         .container button {
             width: 100%;
-            height: 42px;
+            height: 44px;
             font-size: 0.95rem;
             font-weight: 600;
-            background-color: #4f46e5;
+            background-color: #6366f1;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
         }
 
         .container button:hover {
-            background-color: #4338ca;
+            background-color: #4f46e5;
+            transform: translateY(-1px);
         }
 
-        /* RIGHT SIDE: QR code display (Original Placement) */
+        /* RIGHT SIDE: Header + QR Display */
         .rightSide {
             width: 50%;
-            background-color: #f8fafc;
-            border-left: 1px dashed #cbd5e1;
+            background-color: rgba(255, 255, 255, 0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(1.5rem, 4vw, 2.2rem) 1.5rem;
+            text-align: center;
+        }
+
+        /* REC Bijnor Heading on top of QR Box */
+        .qr-header {
+            margin-bottom: 1.2rem;
+        }
+
+        .qr-header h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: clamp(1.25rem, 3vw, 1.5rem);
+            gap: 0.4rem;
+        }
+
+        .qr-header h3 i {
+            color: #818cf8;
+        }
+
+        .qr-header p {
+            color: #cbd5e1;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.2rem;
         }
 
         .qrBox {
@@ -147,44 +158,50 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
         }
 
         .qrBox img {
             max-width: 100%;
-            max-height: 180px;
-            height: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: #fff;
+            width: 170px;
+            height: 170px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: #ffffff;
             padding: 8px;
             display: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
         .qrPlaceholder {
             color: #94a3b8;
             font-size: 0.85rem;
-            text-align: center;
-            line-height: 1.4;
+            padding: 2rem 1rem;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 170px;
         }
 
         .btn-download {
             display: none;
             font-size: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            background: #e0e7ff;
-            color: #4f46e5;
-            border: none;
-            border-radius: 6px;
+            padding: 0.5rem 0.9rem;
+            background: rgba(129, 140, 248, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .btn-download:hover {
-            background: #c7d2fe;
+            background: rgba(129, 140, 248, 0.3);
+            color: #ffffff;
         }
 
-        /* Error Shake Effect */
+        /* Error Effect */
         .error {
             border-color: #ef4444 !important;
             animation: shake 0.4s ease;
@@ -196,11 +213,11 @@
             40%, 80% { transform: translateX(4px); }
         }
 
-        /* Mobile Responsive (Vertical Stack) */
+        /* Responsive Mobile Layout */
         @media (max-width: 600px) {
             .container {
                 flex-direction: column;
-                width: 100%;
+                max-width: 420px;
             }
 
             .leftSide,
@@ -208,9 +225,9 @@
                 width: 100%;
             }
 
-            .rightSide {
-                border-left: none;
-                border-top: 1px dashed #cbd5e1;
+            .leftSide {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
         }
     </style>
@@ -218,15 +235,9 @@
 
 <body>
 
-    <!-- TOP HEADING -->
-    <div class="top-banner">
-        <h1><i class="fa-solid fa-cube"></i> RECB 3D Campus Tour</h1>
-        <p>Text ya Link daalein aur Campus Tour QR Code banayein</p>
-    </div>
-
-    <!-- ORIGINAL CONTAINER STRUCTURE -->
+    <!-- CARD WITH CAMPUS BACKGROUND -->
     <div class="container">
-        <!-- LEFT SIDE: Input & Button -->
+        <!-- LEFT SIDE: Form Inputs -->
         <div class="leftSide">
             <h2>QR Code Generator</h2>
             <p>Text ya URL likho aur QR code banao</p>
@@ -237,11 +248,17 @@
             </button>
         </div>
 
-        <!-- RIGHT SIDE: QR Display -->
+        <!-- RIGHT SIDE: REC Bijnor Title On Top + QR Display -->
         <div class="rightSide">
+            <!-- REC Bijnor Heading -->
+            <div class="qr-header">
+                <h3><i class="fa-solid fa-graduation-cap"></i> REC Bijnor</h3>
+                <p>3D Campus Tour</p>
+            </div>
+
             <div class="qrBox">
                 <span class="qrPlaceholder" id="placeholder">Aapka QR code yahan dikhega</span>
-                <img src="" alt="QR Code" id="qrImg">
+                <img src="" alt="REC Bijnor QR Code" id="qrImg">
                 <button class="btn-download" id="downloadBtn" onclick="downloadQR()">
                     <i class="fa-solid fa-download"></i> Download
                 </button>
@@ -275,7 +292,7 @@
                 const blob = await response.blob();
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(blob);
-                link.download = "RECB_3D_Tour_QR.png";
+                link.download = "RECBijnor_3D_Tour_QR.png";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -287,5 +304,4 @@
 </body>
 
 </html>
-
             
