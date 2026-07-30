@@ -27,11 +27,10 @@
             padding: 1.5rem 1rem;
         }
 
-        /* MAIN CARD CONTAINER WITH WORKING REC BIJNOR IMAGE */
+        /* MAIN CARD CONTAINER WITH REC BIJNOR IMAGE */
         .container {
             width: 100%;
             max-width: 780px;
-            /* Direct Working Campus Image URL */
             background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.88)), 
                         url('https://recb.ac.in/Uploads/Banner/banner1.jpg') center/cover no-repeat;
             border-radius: 20px;
@@ -160,7 +159,6 @@
             gap: 1rem;
         }
 
-        /* The QR Image itself */
         .qrBox img {
             max-width: 100%;
             width: 240px;
@@ -259,8 +257,8 @@
 
             <div class="qrBox">
                 <span class="qrPlaceholder" id="placeholder">Your QR code will appear here</span>
-                <img src="" alt="REC Bijnor QR Code" id="qrImg">
-                <button class="btn-download" id="downloadBtn" onclick="downloadQR()">
+                <img src="" alt="REC Bijnor QR Code" id="qrImg" crossorigin="anonymous">
+                <button class="btn-download" id="downloadBtn" onclick="downloadQRWithHeader()">
                     <i class="fa-solid fa-download"></i> Download
                 </button>
             </div>
@@ -275,12 +273,9 @@
 
         function qrGenerate() {
             if (qrText.value.trim().length > 0) {
-                // Ensure the image src targets the QR code directly
                 qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrText.value.trim())}`;
                 placeholder.style.display = "none";
                 qrImg.style.display = "block";
-                
-                // Show the download button again when a new QR is generated
                 downloadBtn.style.display = "inline-flex";
             } else {
                 qrText.classList.add("error");
@@ -290,26 +285,55 @@
             }
         }
 
-        async function downloadQR() {
-            try {
-                // Fetches ONLY the image source (the QR code itself)
-                const response = await fetch(qrImg.src);
-                const blob = await response.blob();
+        function downloadQRWithHeader() {
+            if (!qrImg.src) return;
+
+            // Canvas create karke REC Bijnor Header + QR combine karenge
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            // Canvas size set karein
+            canvas.width = 360;
+            canvas.height = 430;
+
+            // Background card style
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title: REC Bijnor
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 24px 'Plus Jakarta Sans', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("REC Bijnor", canvas.width / 2, 45);
+
+            // Subtitle: 3D Campus Tour
+            ctx.fillStyle = "#818cf8";
+            ctx.font = "600 13px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("3D CAMPUS TOUR", canvas.width / 2, 68);
+
+            // Fetch QR image and draw on Canvas
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = qrImg.src;
+
+            img.onload = function () {
+                // White background box for QR Code
+                ctx.fillStyle = "#ffffff";
+                ctx.roundRect ? ctx.roundRect(30, 90, 300, 300, 16) : ctx.fillRect(30, 90, 300, 300);
+                ctx.fill();
+
+                // Draw QR Image inside white box
+                ctx.drawImage(img, 40, 100, 280, 280);
+
+                // Trigger Download
                 const link = document.createElement("a");
-                
-                link.href = URL.createObjectURL(blob);
-                link.download = "RECBijnor_3D_Tour_QR.png"; // Saves just the image file
-                
-                document.body.appendChild(link);
+                link.download = "RECBijnor_3DTour_QR.png";
+                link.href = canvas.toDataURL("image/png");
                 link.click();
-                document.body.removeChild(link);
 
-                // Hides the download button after the image is downloaded
+                // Hide Download button after saving
                 downloadBtn.style.display = "none";
-
-            } catch (error) {
-                alert("Download failed. Please try again.");
-            }
+            };
         }
     </script>
 </body>
