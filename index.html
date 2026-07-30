@@ -27,12 +27,12 @@
             padding: 1.5rem 1rem;
         }
 
-        /* MAIN CARD CONTAINER WITH REC BIJNOR IMAGE */
+        /* MAIN CARD CONTAINER WITH WORKING BACKGROUND IMAGE */
         .container {
             width: 100%;
             max-width: 780px;
             background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.88)), 
-                        url('https://recb.ac.in/Uploads/Banner/banner1.jpg') center/cover no-repeat;
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
             border-radius: 20px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
             display: flex;
@@ -288,50 +288,44 @@
         function downloadQRWithHeader() {
             if (!qrImg.src) return;
 
-            // Canvas create karke REC Bijnor Header + QR combine karenge
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
 
-            // Canvas size set karein
             canvas.width = 360;
             canvas.height = 430;
 
-            // Background card style
             ctx.fillStyle = "#0f172a";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Title: REC Bijnor
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 24px 'Plus Jakarta Sans', sans-serif";
             ctx.textAlign = "center";
             ctx.fillText("REC Bijnor", canvas.width / 2, 45);
 
-            // Subtitle: 3D Campus Tour
             ctx.fillStyle = "#818cf8";
             ctx.font = "600 13px 'Plus Jakarta Sans', sans-serif";
             ctx.fillText("3D CAMPUS TOUR", canvas.width / 2, 68);
 
-            // Fetch QR image and draw on Canvas
             const img = new Image();
             img.crossOrigin = "anonymous";
             img.src = qrImg.src;
 
             img.onload = function () {
-                // White background box for QR Code
                 ctx.fillStyle = "#ffffff";
-                ctx.roundRect ? ctx.roundRect(30, 90, 300, 300, 16) : ctx.fillRect(30, 90, 300, 300);
+                if (ctx.roundRect) {
+                    ctx.roundRect(30, 90, 300, 300, 16);
+                } else {
+                    ctx.fillRect(30, 90, 300, 300);
+                }
                 ctx.fill();
 
-                // Draw QR Image inside white box
                 ctx.drawImage(img, 40, 100, 280, 280);
 
-                // Trigger Download
                 const link = document.createElement("a");
                 link.download = "RECBijnor_3DTour_QR.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
 
-                // Hide Download button after saving
                 downloadBtn.style.display = "none";
             };
         }
