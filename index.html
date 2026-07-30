@@ -4,315 +4,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            background-color: crimson;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            width: 60%;
-            max-width: 640px;
-            min-width: 320px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* LEFT SIDE: input + button */
-        .leftSide {
-            width: 50%;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .leftSide h2 {
-            color: crimson;
-            font-size: 1.3rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .leftSide p {
-            color: #666;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .container input {
-            width: 100%;
-            height: 40px;
-            padding: 10px;
-            outline: 0;
-            border: 1px solid crimson;
-            border-radius: 4px;
-            font-size: 0.95rem;
-        }
-
-        .container button {
-            width: 100%;
-            height: 40px;
-            font-size: 1rem;
-            background-color: crimson;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .container button:hover {
-            background-color: #b0003a;
-        }
-
-        /* RIGHT SIDE: QR code display */
-        .rightSide {
-            width: 50%;
-            background-color: #fafafa;
-            border-left: 1px dashed #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .qrBox {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .qrBox img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            display: none;
-        }
-
-        .qrBox img[src]:not([src=""]) {
-            display: block;
-        }
-
-        .qrPlaceholder {
-            color: #bbb;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-
-        .error {
-            animation: error 0.5s linear 5;
-        }
-
-        @keyframes error {
-            0% {
-                transform: translate(0);
-            }
-
-            20% {
-                transform: translate(-2px);
-            }
-
-            40% {
-                transform: translate(0);
-            }
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RECB 3D Campus Tour - QR Generator</title>
-    <!-- Google Fonts & FontAwesome Icons -->
+    <title>RECB 3D Campus Tour</title>
+    <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --primary-light: #e0e7ff;
-            --glass-bg: rgba(15, 23, 42, 0.75);
-            --card-bg: rgba(255, 255, 255, 0.92);
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --danger: #ef4444;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
         }
 
         body {
-            width: 100vw;
+            width: 100%;
             min-height: 100vh;
-            /* AI Generated 3D Campus Style Background Image */
-            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), 
+            /* AI Generated Campus Style Background */
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)), 
                         url('https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1.5rem 1rem;
         }
 
-        /* Top Campus Banner */
-        .campus-header {
+        /* TOP HEADING BANNER */
+        .top-banner {
             text-align: center;
             color: #ffffff;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 640px;
         }
 
-        .campus-header h1 {
-            font-size: 2.2rem;
+        .top-banner h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             font-weight: 800;
+            color: #ffffff;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 0.6rem;
         }
 
-        .campus-header p {
-            font-size: 0.95rem;
+        .top-banner p {
             color: #cbd5e1;
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
             margin-top: 0.3rem;
             font-weight: 500;
         }
 
-        /* Main Container */
+        /* MAIN CONTAINER (Same structure as original) */
         .container {
             width: 100%;
-            max-width: 820px;
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 640px;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             display: flex;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* LEFT PANEL */
+        /* LEFT SIDE: input + button (Original Placement) */
         .leftSide {
-            width: 55%;
-            padding: 2.5rem 2rem;
+            width: 50%;
+            padding: clamp(1.25rem, 3vw, 2rem) 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 1.25rem;
+            gap: 0.85rem;
         }
 
-        .section-title {
-            color: var(--text-main);
-            font-size: 1.3rem;
+        .leftSide h2 {
+            color: #4f46e5;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .section-title i {
-            color: var(--primary);
+        .leftSide p {
+            color: #64748b;
+            font-size: 0.85rem;
+            line-height: 1.3;
         }
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper input {
+        .container input {
             width: 100%;
-            height: 50px;
-            padding: 0 1rem 0 2.75rem;
-            outline: none;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 0.95rem;
-            color: var(--text-main);
+            height: 42px;
+            padding: 10px 12px;
+            outline: 0;
+            border: 1px solid #4f46e5;
+            border-radius: 8px;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
-            background: #fff;
         }
 
-        .input-wrapper i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1rem;
+        .container input:focus {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
 
-        .input-wrapper input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-light);
-        }
-
-        .btn-generate {
+        .container button {
             width: 100%;
-            height: 50px;
-            font-size: 1rem;
+            height: 42px;
+            font-size: 0.95rem;
             font-weight: 600;
-            background-color: var(--primary);
+            background-color: #4f46e5;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
-        .btn-generate:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
+        .container button:hover {
+            background-color: #4338ca;
         }
 
-        /* RIGHT PANEL */
+        /* RIGHT SIDE: QR code display (Original Placement) */
         .rightSide {
-            width: 45%;
+            width: 50%;
             background-color: #f8fafc;
-            border-left: 1px solid var(--border);
+            border-left: 1px dashed #cbd5e1;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2.5rem 1.5rem;
+            padding: clamp(1.25rem, 3vw, 1.5rem);
         }
 
         .qrBox {
@@ -321,122 +147,60 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 1.25rem;
-        }
-
-        .qr-header-tag {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary);
-            background: var(--primary-light);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .img-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 16px;
-            background: #fff;
-            padding: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            gap: 0.75rem;
         }
 
         .qrBox img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            max-width: 100%;
+            max-height: 180px;
+            height: auto;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
+            background: #fff;
+            padding: 8px;
             display: none;
         }
 
         .qrPlaceholder {
-            color: var(--text-muted);
+            color: #94a3b8;
             font-size: 0.85rem;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
+            line-height: 1.4;
         }
 
-        .qrPlaceholder i {
-            font-size: 2.5rem;
-            color: #cbd5e1;
-        }
-
-        .actions {
-            display: flex;
-            width: 100%;
-            max-width: 200px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .actions.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 0.65rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: #fff;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
-
-        .btn-action:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .spinner {
+        .btn-download {
             display: none;
-            width: 32px;
-            height: 32px;
-            border: 3px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .btn-download:hover {
+            background: #c7d2fe;
         }
 
+        /* Error Shake Effect */
         .error {
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-            border-color: var(--danger) !important;
+            border-color: #ef4444 !important;
+            animation: shake 0.4s ease;
         }
 
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-4px); }
+            40%, 80% { transform: translateX(4px); }
         }
 
-        @media (max-width: 680px) {
+        /* Mobile Responsive (Vertical Stack) */
+        @media (max-width: 600px) {
             .container {
                 flex-direction: column;
+                width: 100%;
             }
 
             .leftSide,
@@ -446,7 +210,7 @@
 
             .rightSide {
                 border-left: none;
-                border-top: 1px solid var(--border);
+                border-top: 1px dashed #cbd5e1;
             }
         }
     </style>
@@ -454,55 +218,33 @@
 
 <body>
 
-    <!-- TOP HEADER -->
-    <div class="campus-header">
+    <!-- TOP HEADING -->
+    <div class="top-banner">
         <h1><i class="fa-solid fa-cube"></i> RECB 3D Campus Tour</h1>
-        <p>Scan to explore the Rajkiya Engineering College Banda Virtual Tour</p>
+        <p>Text ya Link daalein aur Campus Tour QR Code banayein</p>
     </div>
 
-    <!-- MAIN GENERATOR CONTAINER -->
+    <!-- ORIGINAL CONTAINER STRUCTURE -->
     <div class="container">
-        <!-- Left Side -->
+        <!-- LEFT SIDE: Input & Button -->
         <div class="leftSide">
-            <div class="section-title">
+            <h2>QR Code Generator</h2>
+            <p>Text ya URL likho aur QR code banao</p>
+            <input type="text" id="qrText" placeholder="Text or Url" value="https://recb.ac.in">
+            <button onclick="qrGenerate()">
+                <span>Generate</span>
                 <i class="fa-solid fa-qrcode"></i>
-                <span>Generate Campus QR</span>
-            </div>
-            
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <input type="text" id="qrText" placeholder="Enter Tour Link or Room URL..." value="https://recb.ac.in" autocomplete="off">
-                    <i class="fa-solid fa-link"></i>
-                </div>
-            </div>
-
-            <button class="btn-generate" onclick="qrGenerate()">
-                <span>Generate Tour QR</span>
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
             </button>
         </div>
 
-        <!-- Right Side -->
+        <!-- RIGHT SIDE: QR Display -->
         <div class="rightSide">
             <div class="qrBox">
-                <div class="qr-header-tag">
-                    <i class="fa-solid fa-vr-cardboard"></i> RECB 3D Tour
-                </div>
-
-                <div class="img-container">
-                    <div class="spinner" id="loader"></div>
-                    <div class="qrPlaceholder" id="placeholder">
-                        <i class="fa-solid fa-qrcode"></i>
-                        <span>Click Generate to view QR</span>
-                    </div>
-                    <img src="" alt="RECB Campus QR Code" id="qrImg">
-                </div>
-
-                <div class="actions" id="actionBtns">
-                    <button class="btn-action" onclick="downloadQR()">
-                        <i class="fa-solid fa-download"></i> Download QR Code
-                    </button>
-                </div>
+                <span class="qrPlaceholder" id="placeholder">Aapka QR code yahan dikhega</span>
+                <img src="" alt="QR Code" id="qrImg">
+                <button class="btn-download" id="downloadBtn" onclick="downloadQR()">
+                    <i class="fa-solid fa-download"></i> Download
+                </button>
             </div>
         </div>
     </div>
@@ -511,33 +253,19 @@
         const qrText = document.querySelector("#qrText");
         const qrImg = document.querySelector("#qrImg");
         const placeholder = document.querySelector("#placeholder");
-        const loader = document.querySelector("#loader");
-        const actionBtns = document.querySelector("#actionBtns");
-
-        qrText.addEventListener("keyup", (e) => {
-            if (e.key === "Enter") qrGenerate();
-        });
+        const downloadBtn = document.querySelector("#downloadBtn");
 
         function qrGenerate() {
-            const val = qrText.value.trim();
-
-            if (val.length > 0) {
+            if (qrText.value.trim().length > 0) {
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrText.value.trim())}`;
                 placeholder.style.display = "none";
-                qrImg.style.display = "none";
-                loader.style.display = "block";
-                actionBtns.classList.remove("active");
-
-                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(val)}`;
-                qrImg.src = qrUrl;
-
-                qrImg.onload = () => {
-                    loader.style.display = "none";
-                    qrImg.style.display = "block";
-                    actionBtns.classList.add("active");
-                };
+                qrImg.style.display = "block";
+                downloadBtn.style.display = "inline-flex";
             } else {
                 qrText.classList.add("error");
-                setTimeout(() => qrText.classList.remove("error"), 500);
+                setTimeout(() => {
+                    qrText.classList.remove("error");
+                }, 500);
             }
         }
 
@@ -547,15 +275,17 @@
                 const blob = await response.blob();
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(blob);
-                link.download = "RECB_3D_Campus_QR.png";
+                link.download = "RECB_3D_Tour_QR.png";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             } catch (error) {
-                alert("Download error, please try again!");
+                alert("Download mein dikkat aayi, dobara try karein.");
             }
         }
     </script>
 </body>
 
 </html>
+
+            
